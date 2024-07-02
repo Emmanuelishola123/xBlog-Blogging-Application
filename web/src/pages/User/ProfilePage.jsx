@@ -3,13 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { PostCard, ProfileUserInfo } from "../components";
-import ProdileUserMoreInfo from "../components/Profile/ProdileUserMoreInfo";
+import { PostCard, ProfileUserInfo } from "../../components";
+import ProdileUserMoreInfo from "../../components/Profile/ProdileUserMoreInfo";
 import {
   userProfileByUsername,
   userProfileTokenless,
-} from "../services/userApis";
-import { getUserPosts } from "../services/postApis";
+} from "../../services/userApis";
+import { getUserPosts } from "../../services/postApis";
 
 function ProfilePage() {
   const { userToken } = useSelector((state) => state.authReducer);

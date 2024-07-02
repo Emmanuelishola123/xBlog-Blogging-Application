@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Logo from "../Layout/Logo";
 
 function Footer() {
   const { userProfile } = useSelector((state) => state.userReducer);
@@ -28,39 +29,48 @@ function Footer() {
         gap={4}
         flexDirection={"column"}
       >
-        <Link to="/">
-          <Image
-            src="/assets/logo.png"
-            alt="logo"
-            width={{ base: "120px", lg: "160px" }}
-            maxHeight="120px"
-          />
-        </Link>
+        <Logo />
         <HStack
           divider={<StackDivider borderColor="gray.200" />}
           spacing={4}
           align="stretch"
         >
           <Link to={"/"}>
-            <Text variant={"p"} fontSize={"2xl"} fontWeight={"400"}>
+            <Text
+              variant={"p"}
+              fontSize={{ base: "sm", md: "lg" }}
+              fontWeight={"400"}
+            >
               Home
             </Text>
           </Link>
           <Link to={"/"}>
-            <Text variant={"p"} fontSize={"2xl"} fontWeight={"400"}>
+            <Text
+              variant={"p"}
+              fontSize={{ base: "sm", md: "lg" }}
+              fontWeight={"400"}
+            >
               Posts
             </Text>
           </Link>
           {userProfile && (
             <Link to={`/profile/${userProfile?.username}`}>
-              <Text variant={"p"} fontSize={"2xl"} fontWeight={"400"}>
+              <Text
+                variant={"p"}
+                fontSize={{ base: "sm", md: "lg" }}
+                fontWeight={"400"}
+              >
                 Profile
               </Text>
             </Link>
           )}
           {userProfile && (
             <Link to={"/profile/settings"}>
-              <Text variant={"p"} fontSize={"2xl"} fontWeight={"400"}>
+              <Text
+                variant={"p"}
+                fontSize={{ base: "sm", md: "lg" }}
+                fontWeight={"400"}
+              >
                 Settings
               </Text>
             </Link>
@@ -68,7 +78,11 @@ function Footer() {
 
           {!userProfile && (
             <Link to={"/auth/login"}>
-              <Text variant={"p"} fontSize={"2xl"} fontWeight={"400"}>
+              <Text
+                variant={"p"}
+                fontSize={{ base: "sm", md: "lg" }}
+                fontWeight={"400"}
+              >
                 Login
               </Text>
             </Link>
@@ -76,20 +90,31 @@ function Footer() {
 
           {!userProfile && (
             <Link to={"/auth/join"}>
-              <Text variant={"p"} fontSize={"2xl"} fontWeight={"400"}>
+              <Text
+                variant={"p"}
+                fontSize={{ base: "sm", md: "lg" }}
+                fontWeight={"400"}
+              >
                 Sign Up
               </Text>
             </Link>
           )}
         </HStack>
       </Flex>
-      <Divider my={6} />
-      <Flex
-        justifyContent={"flex-end"}
-        fontWeight={"semibold"}
-        fontSize={"1.25em"}
-      >
-        Copyright @ 2023
+      <Divider my={2} />
+      <Flex justifyContent={"space-between"} fontSize={"1.05em"}>
+        <Text style={{ fontSize: "0.95rem" }}>
+          Made with ❤️ by{" "}
+          <Link
+            target="_blank"
+            to={"https://www.linkedin.com/in/emmanuelayinde/"}
+            style={{ fontWeight: "bold", fontSize: "0.95rem" }}
+          >
+            Emmanuel Ayinde
+          </Link>
+        </Text>
+
+        <Text style={{ fontSize: "0.95rem" }}>Copyright @ 2024</Text>
       </Flex>
     </Box>
   );

@@ -6,6 +6,7 @@ const { encrypt } = require("../utils/encryption");
 const keys = require("../config");
 const { generateId, extendPeriod, generateOTP } = require("../utils");
 const { sendEmail } = require("../services");
+const signInOAuth = require("../services/oauthServices");
 
 /**
  *
@@ -49,7 +50,6 @@ const registerUser = async (req, res) => {
       email: encrypt(newUser?.email?.toString()),
     };
 
-
     // Generate JWT token
     const token = await signJWT(jwt_payload);
 
@@ -59,17 +59,20 @@ const registerUser = async (req, res) => {
     delete newUser._doc.reset_token;
     delete newUser._doc.reset_token_ttl;
 
-
-    const verificationToken = generateId()
+    const verificationToken = generateId();
     const hashedVeificationToken = bcrypt.hashSync(verificationToken, salt);
 
-    newUser.verification_token = hashedVeificationToken
-    newUser.verification_token_ttl = extendPeriod(10, 'm')
-    newUser.save()
+    newUser.verification_token = hashedVeificationToken;
+    newUser.verification_token_ttl = extendPeriod(10, "m");
+    newUser.save();
 
     // TODO: Send verification token via email to user
-    sendEmail({ body: { verificationToken, hashedVeificationToken }, from: 'xBlog <xblog@support.com>', subject: 'Verify your account', to: req.body.email })
-
+    sendEmail({
+      body: { verificationToken, hashedVeificationToken },
+      from: "xBlog <xblog@support.com>",
+      subject: "Verify your account",
+      to: req.body.email,
+    });
 
     return response(req, res, 201, false, newUser, "Registeration Successful!");
   } catch (error) {
@@ -100,21 +103,25 @@ const loginUser = async (req, res) => {
     }
 
     if (user.is_two_fa_enabled) {
-      const otp = generateOTP()
+      const otp = generateOTP();
       const salt = bcrypt.genSaltSync(Number(keys.SALT_ROUNDS));
       const hashed2FAToken = bcrypt.hashSync(otp, salt);
 
-      user.two_fa_token = hashed2FAToken
-      user.two_fa_token_ttl = extendPeriod(10, 'm')
+      user.two_fa_token = hashed2FAToken;
+      user.two_fa_token_ttl = extendPeriod(10, "m");
 
-      console.log({ otp, hashed2FAToken })
-      user.save()
+      console.log({ otp, hashed2FAToken });
+      user.save();
 
       // TODO: Send 2FA token via email to user
-      sendEmail({ body: { otp, hashed2FAToken }, from: 'xBlog <xblog@support.com>', subject: '2FA', to: user.email })
+      sendEmail({
+        body: { otp, hashed2FAToken },
+        from: "xBlog <xblog@support.com>",
+        subject: "2FA",
+        to: user.email,
+      });
 
-
-      return response(req, res, 302, false, null, "Complete 2FA Verification")
+      return response(req, res, 302, false, null, "Complete 2FA Verification");
     }
 
     // Create JWT payload to generate a new token
@@ -158,7 +165,7 @@ const forgotPassword = async (req, res) => {
         404,
         true,
         false,
-        "No account related to this email address was found!",
+        "No account related to this email address was found!"
       );
 
     const resetToken = generateId();
@@ -173,7 +180,7 @@ const forgotPassword = async (req, res) => {
       },
       {
         new: true,
-      },
+      }
     );
 
     const link = `${keys.CLIENT_BASEURL}/auth/reset-password/${resetToken}`;
@@ -193,7 +200,7 @@ const forgotPassword = async (req, res) => {
       200,
       false,
       link,
-      `Recovery link has been sent to ${req.body.email}`,
+      `Recovery link has been sent to ${req.body.email}`
     );
   } catch (error) {
     console.log({ error });
@@ -218,7 +225,7 @@ const resetPassword = async (req, res) => {
         404,
         true,
         false,
-        "Invalid password reset link",
+        "Invalid password reset link"
       );
 
     const newResetToken = generateId();
@@ -235,7 +242,7 @@ const resetPassword = async (req, res) => {
         },
         {
           new: true,
-        },
+        }
       );
 
       const link = `${keys.CLIENT_BASEURL}/auth/reset-password/${token.reset_token}`;
@@ -255,7 +262,7 @@ const resetPassword = async (req, res) => {
         403,
         true,
         false,
-        `Token expired. A new password reset link has been sent to ${user.email}🤺`,
+        `Token expired. A new password reset link has been sent to ${user.email}🤺`
       );
     }
 
@@ -274,7 +281,7 @@ const resetPassword = async (req, res) => {
       },
       {
         new: true,
-      },
+      }
     );
 
     response(
@@ -283,10 +290,28 @@ const resetPassword = async (req, res) => {
       200,
       false,
       {},
-      `Password reset for ${user.email} successful.`,
+      `Password reset for ${user.email} successful.`
     );
   } catch (error) {
     console.log(error);
+    return response(req, res, 500, true, false, error.message);
+  }
+};
+
+const oAuthFlow = async (req, res) => {
+  try {
+    const userEmail = req.user.email;
+    console.log({ userEmail });
+
+    const response = await signInOAuth(userEmail);
+
+    if (response.statusCode === 302) {
+      res.redirect(keys.CLIENT_BASEURL + `/auth/2fa?token=${response.token}`);
+    } else {
+      res.redirect(keys.CLIENT_BASEURL + `/oauth?token=${response.token}`);
+    }
+  } catch (error) {
+    console.log({ error });
     return response(req, res, 500, true, false, error.message);
   }
 };
@@ -296,4 +321,5 @@ module.exports = {
   loginUser,
   forgotPassword,
   resetPassword,
+  oAuthFlow,
 };

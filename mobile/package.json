@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "expo": "~50.0.11",
+    "expo-dev-client": "~3.3.12",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
-    "react-native": "0.73.4"
+    "react-native": "0.73.4",
+    "react-native-copilot": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

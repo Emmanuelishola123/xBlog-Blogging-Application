@@ -18,17 +18,17 @@ import {
   validateName,
   validatePassword,
   validateUsername,
-} from "../utils/formValidator";
+} from "../../utils/formValidator";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateEmail,
   updatePassword,
   updateUserDetails,
   updateUsername,
-} from "../services/userApis";
-import { updateProfile } from "../redux/userReducer";
-import { authLogin } from "../redux/authReducer";
-import { uploadSingleFile } from "../services/uploadApis";
+} from "../../services/userApis";
+import { updateProfile } from "../../redux/userReducer";
+import { authLogin } from "../../redux/authReducer";
+import { uploadSingleFile } from "../../services/uploadApis";
 
 function SettingPage() {
   const { userProfile } = useSelector((state) => state.userReducer);

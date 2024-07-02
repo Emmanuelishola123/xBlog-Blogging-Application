@@ -1,5 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import React from "react";
+import { githubOAuth } from "../../services/authApis";
 
 function FormButton({ social, login }) {
   switch (social) {
@@ -11,7 +12,7 @@ function FormButton({ social, login }) {
       );
     case "github":
       return (
-        <Button colorScheme={"blackAlpha"}>
+        <Button colorScheme={"blackAlpha"} onClick={githubOAuth}>
           {login ? "Login in with Github" : "Sign up with Github"}
         </Button>
       );

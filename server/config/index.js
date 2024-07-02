@@ -4,6 +4,7 @@ module.exports = {
   APP_NAME: process.env.APP_NAME,
   PORT: process.env.PORT,
   CLIENT_BASEURL: process.env.CLIENT_BASEURL,
+  SERVER_BASEURL: process.env.SERVER_BASEURL,
   JWT_SECRET: process.env.JWT_SECRET,
   MONGODB_CONNECTION_URL: process.env.MONGODB_CONNECTION_URL,
   SALT_ROUNDS: process.env.SALT_ROUNDS,
@@ -14,4 +15,5 @@ module.exports = {
   CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+  SESSION_SECRET: process.env.SESSION_SECRET,
 };

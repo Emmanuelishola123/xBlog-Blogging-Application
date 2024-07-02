@@ -5,7 +5,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { JoinForm, SocialButton } from "../components";
+import { JoinForm, SocialButton } from "../../components";
 
 function Register() {
   return (

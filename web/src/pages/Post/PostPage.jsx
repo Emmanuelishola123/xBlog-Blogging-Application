@@ -1,10 +1,10 @@
 import { Flex } from "@chakra-ui/react";
 import React from "react";
-import { Post, ProfileCard, PostCTA } from "../components";
+import { Post, ProfileCard, PostCTA } from "../../components";
 import { useParams } from "react-router-dom";
-import { getSinglePost } from "../services/postApis";
+import { getSinglePost } from "../../services/postApis";
 import { useQuery } from "@tanstack/react-query";
-import PostCardShadow from "../components/Post/PostCardShadow";
+import PostCardShadow from "../../components/Post/PostCardShadow";
 import { Helmet } from "react-helmet";
 
 function PostPage() {

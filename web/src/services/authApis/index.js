@@ -38,3 +38,13 @@ export const resetPasswordApi = async (data) => {
 
   return response;
 };
+
+export const googleOAuth = async () => {
+  const response = await api().get(`/api/v2/auth/google`);
+  return response;
+};
+
+export const githubOAuth = async () => {
+  const response = await api().get(`/api/v2/auth/github`);
+  return response;
+};

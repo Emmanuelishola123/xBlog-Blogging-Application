@@ -1,25 +1,23 @@
 import { Box, Button, ButtonGroup, Flex, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { DragNDropFile, NewPost } from "../components";
-import PostRichTextEditor from "../components/Post/PostRichTextEditor";
-import PostRichTextMantineEditor from "../components/Post/PostRichTextMantineEditor";
+import React, { useState } from "react";
+import { DragNDropFile } from "../../components";
+import PostRichTextMantineEditor from "../../components/Post/PostRichTextMantineEditor";
 import ReactQuill from "react-quill";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { uploadApi } from "../services/api";
-import { uploadSingleFile } from "../services/uploadApis";
-import { createPost } from "../services/postApis";
+import { uploadSingleFile } from "../../services/uploadApis";
+import { createPost } from "../../services/postApis";
 
 function NewPostPage() {
   const { userProfile } = useSelector((state) => state.userReducer);
   const [html, setHTML] = useState("****");
   const [heading, setHeading] = useState(
-    "<h1><strong>Post Title</strong></h1>",
+    "<h1><strong>Post Title</strong></h1>"
   );
   const [banner, setBanner] = useState(null);
   let [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // console.log({ html }, { heading });
   // console.log(searchParams.get("preview"));
@@ -39,7 +37,7 @@ function NewPostPage() {
       };
       const newPost = await createPost(post);
       setLoading(false);
-      navigate(`/post/${newPost?.data}`)
+      navigate(`/post/${newPost?.data}`);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -91,7 +89,11 @@ function NewPostPage() {
                 value={heading}
                 placeholder={"Enter your blog post header here..."}
               />
-              <PostRichTextMantineEditor setContent={setHTML} content={html} placeholder={"Your comment goes here..."} />
+              <PostRichTextMantineEditor
+                setContent={setHTML}
+                content={html}
+                placeholder={"Your comment goes here..."}
+              />
             </Flex>
 
             <Flex>

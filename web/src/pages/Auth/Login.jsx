@@ -1,11 +1,12 @@
+import React from "react";
 import {
   Box,
   Flex,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 import { Link } from "react-router-dom";
-import { LoginForm, SocialButton } from "../components";
+
+import { LoginForm, SocialButton } from "../../components";
 
 function Login() {
   return (

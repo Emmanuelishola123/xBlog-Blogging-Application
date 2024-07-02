@@ -3,6 +3,8 @@ export { default as Header } from "./Header";
 export { default as Footer } from "./Footer";
 export { default as Editor } from "./Editor";
 
+export { default as Logo } from "./Layout/Logo";
+
 // Profile Components
 export { default as ProfileCard } from "./Profile/ProfileCard";
 export { default as ProfileUserInfo } from "./Profile/ProfileUserInfo";
@@ -23,4 +25,4 @@ export { default as SocialButton } from "./Auth/SocialButton";
 export { default as JoinForm } from "./Auth/JoinForm";
 export { default as LoginForm } from "./Auth/LoginForm";
 export { default as ForgetPasswordForm } from "./Auth/ForgetPasswordForm";
-export {default as ResetPasswordForm} from "./Auth/ResetPasswordForm"
+export { default as ResetPasswordForm } from "./Auth/ResetPasswordForm";

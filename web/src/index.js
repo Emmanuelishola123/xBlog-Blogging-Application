@@ -20,69 +20,72 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import { MantineProvider } from "@mantine/core";
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <ChakraProvider>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<App />} />
-              <Route path="search" element={<SearchPage />} />
-              <Route path="404" element={<NotFoundPage />} />
-              <Route path="*" element={<Navigate to="/404" />} />
-            </Route>
-            <Route path="profile" element={<Layout />}>
-              {/* <Route index element={<App />} /> */}
+    <MantineProvider>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<App />} />
+                <Route path="search" element={<SearchPage />} />
+                <Route path="404" element={<NotFoundPage />} />
+                <Route path="*" element={<Navigate to="/404" />} />
+              </Route>
+              <Route path="profile" element={<Layout />}>
+                {/* <Route index element={<App />} /> */}
+                <Route
+                  path="settings"
+                  element={
+                    <ProtectedRoute>
+                      <SettingPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path=":username" element={<ProfilePage />} />
+                <Route path="*" element={<Navigate to="/404" />} />
+              </Route>
+              <Route path="post" element={<Layout />}>
+                {/* <Route index element={<App />} /> */}
+                <Route
+                  path="new"
+                  element={
+                    <ProtectedRoute>
+                      <NewPostPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path=":postSlug" element={<PostPage />} />
+                <Route path="*" element={<Navigate to="/404" />} />
+              </Route>
               <Route
-                path="settings"
+                path="auth"
                 element={
-                  <ProtectedRoute>
-                    <SettingPage />
-                  </ProtectedRoute>
+                  <Layout>
+                    <ProtectedRoute authPage={true} />
+                  </Layout>
                 }
-              />
-              <Route path=":username" element={<ProfilePage />} />
+              >
+                <Route index element={<Register />} />
+                <Route path="join" element={<Register />} />
+                <Route path="login" element={<Login />} />
+                <Route path="forget-password" element={<ForgetPassword />} />
+                <Route
+                  path="reset-password/:resetToken"
+                  element={<ResetPassword />}
+                />
+                <Route path="*" element={<Navigate to="/404" />} />
+              </Route>
               <Route path="*" element={<Navigate to="/404" />} />
-            </Route>
-            <Route path="post" element={<Layout />}>
-              {/* <Route index element={<App />} /> */}
-              <Route
-                path="new"
-                element={
-                  <ProtectedRoute>
-                    <NewPostPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path=":postSlug" element={<PostPage />} />
-              <Route path="*" element={<Navigate to="/404" />} />
-            </Route>
-            <Route
-              path="auth"
-              element={
-                <Layout>
-                  <ProtectedRoute authPage={true} />
-                </Layout>
-              }
-            >
-              <Route index element={<Register />} />
-              <Route path="join" element={<Register />} />
-              <Route path="login" element={<Login />} />
-              <Route path="forget-password" element={<ForgetPassword />} />
-              <Route
-                path="reset-password/:resetToken"
-                element={<ResetPassword />}
-              />
-              <Route path="*" element={<Navigate to="/404" />} />
-            </Route>
-            <Route path="*" element={<Navigate to="/404" />} />
-          </Routes>
-        </BrowserRouter>
-      </QueryClientProvider>
-    </Provider>
-  </ChakraProvider>,
+            </Routes>
+          </BrowserRouter>
+        </QueryClientProvider>
+      </Provider>
+    </MantineProvider>
+  </ChakraProvider>
 );

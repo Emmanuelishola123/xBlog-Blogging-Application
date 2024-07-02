@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { ResetPasswordForm } from "../components";
+import { ResetPasswordForm } from "../../components";
 
 function ResetPassword() {
   const { resetToken } = useParams();

@@ -1,11 +1,11 @@
 import { Box, Button, ButtonGroup, Flex, Link, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { UseQuery, SetQuery } from "../hooks/useQuery";
-import SearchedComments from "../components/Search/SearchedComments";
-import SearchedUsers from "../components/Search/SearchedUsers";
-import SearchedPosts from "../components/Search/SearchedPosts";
+import { UseQuery, SetQuery } from "../../hooks/useQuery";
+import SearchedComments from "../../components/Search/SearchedComments";
+import SearchedUsers from "../../components/Search/SearchedUsers";
+import SearchedPosts from "../../components/Search/SearchedPosts";
 import { useSearchParams } from "react-router-dom";
-import { searchAll } from "../services/searchApis";
+import { searchAll } from "../../services/searchApis";
 
 function SearchPage() {
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,6 @@ function SearchPage() {
     setSearchParams(searchParams);
   };
 
-  
   useEffect(() => {
     const fetchQuery = async () => {
       if (q) {
